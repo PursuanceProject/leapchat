@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-const btoa = require('btoa');
-const atob = require('atob');
+import btoa from 'btoa';
+import atob from 'atob';
 
 import Header from './layout/Header';
 
@@ -21,7 +22,7 @@ import { SERVER_ERROR_PREFIX, AUTH_ERROR, ON_CLOSE_RECONNECT_MESSAGE,
          USER_STATUS_DELAY_MS } from '../constants/messaging';
 
 
-export default class App extends Component {
+class App extends Component {
   constructor(props){
     super(props);
 
@@ -650,3 +651,13 @@ export default class App extends Component {
 }
 
 App.propTypes = {}
+
+const mapStateToProps = (reduxState) => {
+  return reduxState.chat;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
