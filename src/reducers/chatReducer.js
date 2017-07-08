@@ -11,12 +11,12 @@ const initialState = {
     statuses: []
 };
 
-export default chatReducer = (state = initialState, action) => {
+function chatReducer(state = initialState, action) {
     switch (action.type) {
 
         case CHAT_ADD_MESSAGE:
             return Object.assign({
-                messages: [...state.messages, {
+                messages: [...state.emessages, {
                     key: action.key,
                     from: action.fromUsername + action.maybeSenderID,
                     msg: action.message
@@ -46,3 +46,5 @@ export default chatReducer = (state = initialState, action) => {
             return state;
     }
 }
+
+export default chatReducer;

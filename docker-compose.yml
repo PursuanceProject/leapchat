@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    db:
+        image: postgres:latest
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRES_PASSWORD=superuser
+            - POSTGRES_USER=superuser
+            - POSTGRES_DB=leapchat
+    adminer:
+        links:
+            - db:db
+        image: adminer
+        ports:
+            - 8081:8081
