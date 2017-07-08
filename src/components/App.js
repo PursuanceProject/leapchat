@@ -83,6 +83,9 @@ class App extends Component {
   }
 
   componentDidMount() {
+
+    this.props.addNewMessage({ key: "theKey", fromUsername: "Steven", maybeSenderId: "Steven", message: "Stevens message" })
+
     detectPageVisible(this.setStatusViewing,
       this.setStatusOnline,
       this.setStatusOffline);
@@ -612,11 +615,10 @@ class App extends Component {
     const {
       alertMessage,
       alertStyle,
-      username,
       showUsernameModal
     } = this.state;
 
-    const { statuses, messages } = this.props;
+    const { statuses, messages, username } = this.props;
 
     let previousUsername = '';
     if (!username) {
@@ -660,8 +662,8 @@ const mapStateToProps = (reduxState) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNewMessage: ({ fromUsername, maybeSenderId, message }) =>
-      dispatch(addMessage({ fromUsername, maybeSenderId, message })),
+    addNewMessage: ({ key, fromUsername, maybeSenderId, message }) =>
+      dispatch(addMessage({ key, fromUsername, maybeSenderId, message })),
     addNewUserStatus: ({ fromUsername, userStatus, created }) =>
       dispatch(addUserStatus(({ fromUsername, userStatus, created }))),
     clearAllMessages: () => dispatch(clearMessages()),

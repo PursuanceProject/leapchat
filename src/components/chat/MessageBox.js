@@ -6,7 +6,7 @@ import Throbber from '../general/Throbber';
 import { playNotification } from '../../utils/audio';
 
 class MessageBox extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -14,22 +14,22 @@ class MessageBox extends Component {
       messagesEnd: null
     };
   }
-  componentDidUpdate(prevProps){
-    if (this.shouldScroll(prevProps)){
+  componentDidUpdate(prevProps) {
+    if (this.shouldScroll(prevProps)) {
       this.scrollToBottom();
     }
   }
 
-  shouldScroll(prevProps){
+  shouldScroll(prevProps) {
     let hasNewMessages = this.hasNewMessages(prevProps);
-    if (hasNewMessages){
+    if (hasNewMessages) {
       this.checkNewMessages(prevProps.messages);
     }
     return hasNewMessages;
   }
 
-  checkNewMessages(prevMessages){
-    let messageIds = prevMessages.map( (message) => {
+  checkNewMessages(prevMessages) {
+    let messageIds = prevMessages.map((message) => {
       return message.key;
     });
     messageIds = messageIds.concat(this.state.notifiedIds);
@@ -42,22 +42,22 @@ class MessageBox extends Component {
     let newMessageIds = [];
     let iWasMentioned = false;
     let newMessageFromNotMe = false;
-    newMessages.forEach( (message) => {
+    newMessages.forEach((message) => {
       newMessageIds.push(message.key);
       let content = message.msg.toLowerCase();
       let username = this.props.username.toLowerCase();
-      if (content.indexOf('@' + username) > -1){
+      if (content.indexOf('@' + username) > -1) {
         iWasMentioned = true;
       }
-      if (message.from !== this.props.username){
+      if (message.from !== this.props.username) {
         newMessageFromNotMe = true
       }
     });
 
-    if (newMessageFromNotMe){
+    if (newMessageFromNotMe) {
       playNotification();
     }
-    if (iWasMentioned){
+    if (iWasMentioned) {
       // TODO: Display dialog box with this data:
       // {'title': message.from, 'message': message.msg}
     }
@@ -68,15 +68,15 @@ class MessageBox extends Component {
     });
   }
 
-  hasNewMessages(prevProps){
+  hasNewMessages(prevProps) {
     return prevProps.messages.length !== this.props.messages.length;
   }
 
-  scrollToBottom(){
-    this.messagesEnd.scrollIntoView({behavior: "smooth"});
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
-  render(){
+  render() {
     let { messages, username } = this.props;
 
     return (
@@ -84,8 +84,8 @@ class MessageBox extends Component {
         <div className="message-list">
           <MessageList messages={messages} username={username} />
         </div>
-        <div style={{float: "left", clear: "both"}}
-             ref={(el) => { this.messagesEnd = el }}>
+        <div style={{ float: "left", clear: "both" }}
+          ref={(el) => { this.messagesEnd = el }}>
         </div>
       </div>
     )
