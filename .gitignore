@@ -5,3 +5,6 @@ leapchat
 
 # bower static assets
 static/lib/
+
+# docker volumes
+_docker-volumes/

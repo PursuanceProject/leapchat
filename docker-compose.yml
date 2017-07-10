@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-    db:
+    postgres:
         image: postgres:latest
         ports:
             - 5432:5432
@@ -9,9 +9,17 @@ services:
             - POSTGRES_PASSWORD=superuser
             - POSTGRES_USER=superuser
             - POSTGRES_DB=leapchat
+        volumes:
+            - ./_docker-volumes/postgres:/var/lib/postgresql/data
+    postgrest:
+        image: suzel/docker-postgrest:latest
+        ports:
+            - "3214:3000"
+        environment:
+            PGRST_DB_URI: "postgres://superuser:superuser@postgres:5432/leapchat"
+        depends_on:
+            - postgres
     adminer:
-        links:
-            - db:db
         image: adminer
         ports:
             - 8081:8081
