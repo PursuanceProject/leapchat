@@ -18,6 +18,14 @@ class MessageForm extends Component {
   }
 
   componentDidMount(){
+    this.resolveFocus();
+  }
+
+  componentDidUpdate(){
+    this.resolveFocus();
+  }
+
+  resolveFocus(){
     if(this.props.hasFocus){
       this.messageInput.focus();
     }
