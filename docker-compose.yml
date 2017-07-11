@@ -12,14 +12,20 @@ services:
         volumes:
             - ./_docker-volumes/postgres:/var/lib/postgresql/data
     postgrest:
-        image: begriffs/postgrest:latest
+        image: erasche/postgrest:latest
         ports:
             - "3000:3000"
         environment:
-            PGRST_DB_URI: "postgres://superuser:superuser@postgres:5432/leapchat"
+            PGUSER: superuser
+            PGPASSWORD: superuser
+            PGHOST: postgres
+            PGPORT: 5432
+            PGDATABASE: leapchat
+            PGSCHEMA: public
+            DB_ANON_ROLE: postgres
         depends_on:
             - postgres
     adminer:
         image: adminer
         ports:
-            - 8081:8081
+            - 8081:8080
