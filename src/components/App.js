@@ -83,9 +83,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-
-    this.props.addNewMessage({ key: "theKey", fromUsername: "Steven", maybeSenderId: "Steven", message: "Stevens message" })
-
     detectPageVisible(this.setStatusViewing,
       this.setStatusOnline,
       this.setStatusOffline);
@@ -93,17 +90,6 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!this.state.showUsernameModal) {
-      // TODO: Find better way to do
-      // this. `findDOMNode(this.refs.messageBox).focus()` doesn't
-      // work here, and `this.refs.messageBox.focus()` doesn't work
-      // here, because we don't have a reference to the component;
-      // it's not in `this.refs`.
-
-      $('.message-form textarea').focus();
-      // this.refs.messageBox.focus();
-    }
-
     if (prevState.status !== this.props.status ||
       prevState.username !== this.props.username) {
       this.sendStatusMessage();
@@ -647,7 +633,8 @@ class App extends Component {
             onAlertDismiss={this.onAlertDismiss}
             messages={messages}
             username={username}
-            onSendMessage={this.onSendMessage} />
+            onSendMessage={this.onSendMessage} 
+            messageInputFocus={!this.state.showUsernameModal}/>
         </main>
       </div>
     );
@@ -665,7 +652,7 @@ const mapDispatchToProps = (dispatch) => {
     addNewMessage: ({ key, fromUsername, maybeSenderId, message }) =>
       dispatch(addMessage({ key, fromUsername, maybeSenderId, message })),
     addNewUserStatus: ({ fromUsername, userStatus, created }) =>
-      dispatch(addUserStatus(({ fromUsername, userStatus, created }))),
+      dispatch(addUserStatus({ fromUsername, userStatus, created })),
     clearAllMessages: () => dispatch(clearMessages()),
     setUsername: (username) => dispatch(setUsername(username))
   };

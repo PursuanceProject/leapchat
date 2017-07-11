@@ -22,6 +22,7 @@ class ChatContainer extends Component {
           username={username} />
 
         <MessageForm
+          hasFocus={this.props.messageInputFocus}
           onSendMessage={onSendMessage} />
 
       </div>
